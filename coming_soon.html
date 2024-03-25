@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eShtyle | Coming Soon</title>
+    <meta property="og:title" content="Eshtyle: The Future of Personalized Online Fashion Shopping">
+    <meta property="og:description" content="Revolutionizing your shopping experience with Eshtyle: Where AI meets style for perfect fits & personalized fashion. Dive into the future of shopping with us. #EshtyleRevolution">
+    <meta property="og:image:url" content="http://eshtyle.com/logo.png" />
+    <meta property="og:image:secure_url" content="https:/.eshtyle.com/logo.jpg" /> 
+    <meta property="og:image:type" content="image/jpg" /> 
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            /* Black background */
+            color: #fff;
+            /* White text color */
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        #demo {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #ff4500;
+            /* Orange color for the timer, to stand out */
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Slightly transparent black */
+        }
+        
+        .modal-content {
+            background-color: #0a0a0a;
+            /* Darker shade for modal background */
+            color: #fff;
+            /* White text color */
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            animation: modalFade 0.5s;
+        }
+        
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #ddd;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        button {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-image: linear-gradient(to right, #f95f7b, #bae0e8, #548bb2, #eeba52, #e6275d);
+            /* Gradient background for buttons using colors from the logo */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        input[type=email] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-top: 10px;
+            background: #222;
+            /* Darker input fields */
+            color: #fff;
+            /* White text */
+            border: 1px solid #555;
+            /* Slightly lighter border for visibility */
+        }
+        
+        #loader {
+            position: fixed;
+            z-index: 99;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #807f7f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeOut 2s ease-out forwards;
+            animation-delay: 3s;
+            /* Adjust based on how long you want the loader to show */
+        }
+        
+        #loaderLogo {
+            /* Adjust based on your logo's size */
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        #bgVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0.5;
+            /* Adjust the opacity to your liking */
+            z-index: -1;
+            /* Ensures the video stays in the background */
+        }
+        
+        #videoWrapper {
+            position: relative;
+            width: 100%;
+            /* Adjust if needed */
+            height: 100%;
+            /* Adjust if needed */
+            overflow: hidden;
+        }
+        
+        #bgVideo {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -2;
+            /* Ensure the video stays behind the overlay */
+        }
+        
+        #videoOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Black overlay with 50% opacity */
+            z-index: -1;
+            /* Above the video, below the content */
+        }
+        
+        .container,
+        .modal-content {
+            /* Use RGBA for black background with alpha transparency */
+            background: rgba(0, 0, 0, 0.5);
+            /* The last value (0.5) is the opacity level */
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            /* Optional: for rounded corners */
+        }
+        /* If you specifically want to adjust the logo's transparency */
+    </style>
+</head>
+
+<body>
+    <div id="loader">
+        <img src="logo.png" alt="Logo" id="loaderLogo" width="200px">
+    </div>
+
+
+    <!--  -->
+
+    <div class="container">
+        <video autoplay muted loop id="bgVideo">
+            <source src="bg1.mp4" type="video/mp4">
+            Your browser does not support HTML5 video.
+          </video>
+
+        <div id="videoOverlay"></div>
+
+
+
+        <img src="logo.png" alt="Logo" style="     margin-bottom: -6rem;width: 19rem; ">
+
+        <h1>eShtyle is Coming Soon!</h1>
+        <p id="demo">15d 14h 34m 12s</p>
+        <div id="content">
+            <p>Get ready for a revolutionary shopping experience with 3D customization and virtual try-on for clothes. Stay tuned!</p>
+            <button id="waitlistBtn">Join Waitlist</button>
+        </div>
+    </div>
+
+    <div id="waitlistModal" class="modal">
+        <div class="modal-content" style="            background: rgba(0, 0, 0) !important;        ">
+            <span class="close">&times;</span>
+            <form id="waitlistForm">
+                <h2>Join Our Waitlist</h2>
+                <p>Enter your email to stay updated and get exclusive early access:</p>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <button type="submit" style="margin-top:5px">Submit</button>
+            </form>
+            <div id="message"></div>
+
+        </div>
+    </div>
+
+    <!-- <script src="script.js"></script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Countdown timer
+            setTimeout(function() {
+                document.getElementById('loader').style.display = 'none';
+            }, 3000);
+            var countDownDate = new Date("Apr 15, 2024 00:00:00").getTime();
+
+            var x = setInterval(function() {
+                var now = new Date().getTime();
+                var distance = countDownDate - now;
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById("demo").innerHTML = days + "d " + hours + "h " +
+                    minutes + "m " + seconds + "s ";
+
+                if (distance < 0) {
+                    clearInterval(x);
+                    document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+            }, 1000);
+
+            // Modal behavior
+            var modal = document.getElementById("waitlistModal");
+            var btn = document.getElementById("waitlistBtn");
+            var span = document.getElementsByClassName("close")[0];
+
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+          
+        });
+
+
+
+
+
+        
+        document.getElementById('waitlistForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent the default form submission
+        
+            var email = document.getElementById('email').value; // Get the email value from the form
+        
+            fetch('https://dashboard.eshtyle.com/api/waitlist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: email }), // Send the email in JSON format
+            })
+            .then(response => {
+                // Check the response status code here
+                if (response.ok) { // response.ok is true if status is 200-299
+                    return response.json().then(data => {
+                        document.getElementById('message').innerHTML = 'Thank you for joining our waitlist!';
+                    });
+                } else {
+                    // Handle HTTP errors
+                    return response.json().then(data => {
+                        document.getElementById('message').innerHTML = data.message || 'There was an error. Please try again.';
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('message').innerHTML = 'There was an error. Please try again.';
+            });
+        });
+        
+            </script>
+    </body>
+
+</html>

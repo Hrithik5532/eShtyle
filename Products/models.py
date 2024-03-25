@@ -7,17 +7,17 @@ import uuid
 
 
 class SQP(models.Model):
-    
     color = models.CharField(max_length=200)
     price = models.IntegerField()
     size = models.CharField(max_length=200)
-    
+    quality = models.CharField(max_length=200, blank=True, null=True)
     def __str__(self):
-        return self.color + " " + str(self.price) + " " + self.size
+        return str(self.id)+ self.color + " " + str(self.price) + " " + self.size
     
     
     
 class AllProducts(models.Model):
+    image = models.ImageField(upload_to='products',blank=True, null=True)
     name = models.CharField(max_length=200)
     sqp = models.ManyToManyField(SQP)
     description = models.TextField()
